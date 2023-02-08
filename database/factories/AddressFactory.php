@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
  */
-class CompanyFactory extends Factory
+class AddressFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,8 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'commission_rate' => fake()->numberBetween(1, 6),
-            'name' => fake()->company(),
+            'city' => fake()->city(),
+            'state' => fake()->stateAbbr()
         ];
     }
 }

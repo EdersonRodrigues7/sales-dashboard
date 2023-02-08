@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client>
  */
-class CompanyFactory extends Factory
+class ClientFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +18,8 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'commission_rate' => fake()->numberBetween(1, 6),
-            'name' => fake()->company(),
+            'address_id' => fake()->numberBetween(1, 10),
+            'user_id' => User::factory(),
         ];
     }
 }
