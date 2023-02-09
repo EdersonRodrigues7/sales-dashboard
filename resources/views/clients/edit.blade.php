@@ -30,7 +30,7 @@
                 <div class="mt-4">
                     <x-input-label for="address" :value="__('Address')" />
 
-                    {{-- <x-select-address :selectedValue="$client->address" /> --}}
+                    <x-select-address :selectedValue="$client->address" />
 
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
