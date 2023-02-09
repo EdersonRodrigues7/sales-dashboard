@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -15,7 +18,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('clients.index');
+        $clients = Client::with('user', 'address')->paginate();
+        return view('clients.index', compact('clients'));
     }
 
     /**
@@ -25,7 +29,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('clients.create');
     }
 
     /**
@@ -36,7 +40,19 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        //
+        DB::transaction(function() use($request){
+            $user = User::create([
+                'email' => $request->get('email'),
+                'name' => $request->get('name'),
+                'password' => Hash::make('123456')
+            ]);
+
+            $user->client->create([
+                'address_id' => $request->get('address_id')
+            ]);
+        });
+
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -58,7 +74,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('clients.edit', compact('client'));
     }
 
     /**
@@ -70,7 +86,18 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        DB::transaction(function() use($request, $client){
+            $client->user->update([
+                'email' => $request->get('email'),
+                'name' => $request->get('name')
+            ]);
+
+            $client->update([
+                'address_id' => $request->get('address_id')
+            ]);
+        });
+
+        return redirect()->route('clients.index');
     }
 
     /**
