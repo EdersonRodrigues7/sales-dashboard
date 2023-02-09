@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use OpenAI\Laravel\Facades\OpenAI;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('/clients', ClientController::class);
 });
 
-Route::get('/chart', function(){});
+Route::get('/chart', function(){
+    dd("Terminar de configurar!!");
+    return OpenAI::completions()->create([
+        'model' => 'text-davinci-003',
+        'prompt' => '',
+        'max_tokens' => 1500
+    ])->choices[0]->text();
+});
 
 require __DIR__.'/auth.php';
