@@ -13,13 +13,27 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+
+    @stack('customer-scripts')
     
 </head>
 
 <body class="min-h-screen">
     <div x-data="{ menuVisibility: false }">
         <x-side-bar />
+        <div class="flex flex-col md:pl-64">
+            <x-navigation />
+            <main class="flex-1">
+                <div class="py-6">
+                    {{ $slot }}
+                </div>
+            </main>
+        </div>
     </div>
+
+    @livewireScripts
+    
 </body>
 
 </html>
