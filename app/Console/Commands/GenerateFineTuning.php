@@ -34,7 +34,7 @@ class GenerateFineTuning extends Command
 
             $file = OpenAI::files()->upload([
                 'purpose' => 'fine-tune',
-                'file' => fopen(storage_path('olw-dataset-template.jsonl'), 'r')
+                'file' => fopen(storage_path('sales-dataset-template.jsonl'), 'r')
             ]);
 
             $this->comment("File {$file->filename} with Id {$file->id}");
@@ -43,7 +43,7 @@ class GenerateFineTuning extends Command
 
             $fineTuning = OpenAI::fineTunes()->create([
                 'training_file' => $file->id,
-                'suffix' => 'olw-2',
+                'suffix' => 'sales-dashboard',
                 'model' => 'davinci'
             ]);
 
